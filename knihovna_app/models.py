@@ -1,54 +1,53 @@
 from django.db import models
+import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 
+def letosni_rok():
+    return datetime.date.today().year
 
+
+def maximalni_rok(hodnota):
+    return MaxValueValidator(letosni_rok())(hodnota)
 
 class Autor(models.Model):
-    idautor = models.AutoField(primary_key=True)
-    jmeno = models.CharField(max_length=45)
-    prijmeni = models.CharField(max_length=45)
-    zivotopis = models.TextField(blank=True, null=True)
-
-
-
-class AutorHasKniha(models.Model):
-    autor_idautor = models.OneToOneField(Autor, models.DO_NOTHING, db_column='autor_idautor', primary_key=True)
-    kniha_idkniha = models.ForeignKey('Kniha', models.DO_NOTHING, db_column='kniha_idkniha')
+    id = models.AutoField(primary_key=True)
+    jmeno = models.CharField(max_length=30, null=False, blank=False, verbose_name="Jméno")
+    prijmeni = models.CharField(max_length=30, verbose_name="Přijmení", blank=False, null=True)
+    narozeni = models.DateTimeField(verbose_name="Narození")
+    zivotopis = models.TextField(verbose_name="Životopis autora", default='')
 
     class Meta:
-        unique_together = (('autor_idautor', 'kniha_idkniha'),)
+        ordering = ["jmeno", "-narozeni"]
 
+    def __str__(self):
+        return self.prijmeni
 
 class Ctenar(models.Model):
-    idctenar = models.AutoField(primary_key=True)
-    jmeno = models.CharField(max_length=45)
-    prijmeni = models.CharField(max_length=45)
+    id = models.AutoField(primary_key=True)
+    jmeno = models.CharField(max_length=30, null=False, blank=False, verbose_name="Jméno")
+    prijmeni = models.CharField(max_length=30, verbose_name="Přijmení", blank=False, null=True)
+    narozeni = models.DateTimeField(verbose_name="Narození")
 
+    class Meta:
+        ordering = ["jmeno", "-narozeni"]
 
+    def __str__(self):
+        return self.prijmeni
 
 class Kniha(models.Model):
-    idkniha = models.AutoField(primary_key=True)
-    isbn = models.CharField(unique=True, max_length=30, blank=True, null=True)
-    titul = models.CharField(max_length=100)
-    jazyk = models.CharField(max_length=10, blank=True, null=True)
-    cena = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
-    obsah = models.TextField(blank=True, null=True)
-    strany = models.PositiveIntegerField(blank=True, null=True)
-    zanr = models.CharField(max_length=25, blank=True, null=True)
-    vydavatelstvi_idvydavatelstvi = models.ForeignKey('Vydavatelstvi', models.DO_NOTHING, db_column='vydavatelstvi_idvydavatelstvi')
-    vypujcka_idvypujcka = models.ForeignKey('Vypujcka', models.DO_NOTHING, db_column='Vypujcka_idVypujcka')
+    id = models.AutoField(primary_key=True)
+    isbn = models.CharField(max_length=30, verbose_name="ISBN knihy")
+    titul = models.CharField(max_length=100 , null=False, blank=False, verbose_name="Název díla")
+    zanr = models.CharField(max_length=30, verbose_name="Žánr", blank=False, null=False)
+    vydani = models.PositiveIntegerField(verbose_name="Vydání", default=letosni_rok(), validators=[MinValueValidator(1800), maximalni_rok])
+    obsah = models.TextField(verbose_name="Obsah knihy", default='')
+    ctenar = models.ForeignKey(Ctenar, on_delete=models.CASCADE)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
 
 
+    class Meta:
+        ordering = ["-vydani", "titul"]
 
-class Vydavatelstvi(models.Model):
-    idvydavatelstvi = models.AutoField(primary_key=True)
-    nazev = models.CharField(max_length=45)
-
-
-
-class Vypujcka(models.Model):
-    idvypujcka = models.AutoField(db_column='idVypujcka', primary_key=True)
-    datumvypujcky = models.DateField(db_column='DatumVypujcky')
-    datumvraceni = models.DateField(db_column='DatumVraceni', blank=True, null=True)
-    ctenar_idctenar = models.ForeignKey(Ctenar, models.DO_NOTHING, db_column='Ctenar_idctenar')
+    def __str__(self):
+        return self.titul
