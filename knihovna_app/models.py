@@ -6,6 +6,8 @@ from django.urls import reverse
 def letosni_rok():
     return datetime.date.today().year
 
+def attachment_path(instance, filename):
+    return "kniha/" + str(instance.file) + "/attachments/" + filename
 
 def maximalni_rok(hodnota):
     return MaxValueValidator(letosni_rok())(hodnota)
@@ -35,13 +37,29 @@ class Ctenar(models.Model):
     def __str__(self):
         return self.prijmeni
 
+class Priloha(models.Model):
+     title = models.CharField(max_length=200, verbose_name="Title")
+     last_update = models.DateTimeField(auto_now=True)
+     file = models.FileField(upload_to=attachment_path, null=True, verbose_name="File")
+
+     TYPE_OF_ATTACHMENT = (
+     ('Obal', 'Obal'),
+     ('Video', 'Video'),
+     ('Jiné', 'Jiné'),
+     )
+
+     type = models.CharField(max_length=5, choices= TYPE_OF_ATTACHMENT, default='Obal', help_text='Vyber povolenou přílohu', verbose_name="Typ přílohy")
+
 class Kniha(models.Model):
     id = models.AutoField(primary_key=True)
     isbn = models.CharField(max_length=30, verbose_name="ISBN knihy")
     titul = models.CharField(max_length=100 , null=False, blank=False, verbose_name="Název díla")
     zanr = models.CharField(max_length=30, verbose_name="Žánr", blank=False, null=False)
+    hodnoceni = models.FloatField(default=5, validators=[MinValueValidator(1), MaxValueValidator(10)], null=True,
+                               help_text="Od 1 do 10", verbose_name="Hodnoceni")
     vydani = models.PositiveIntegerField(verbose_name="Vydání", default=letosni_rok(), validators=[MinValueValidator(1800), maximalni_rok])
     obsah = models.TextField(verbose_name="Obsah knihy", default='')
+    priloha = models.ForeignKey(Priloha, on_delete=models.CASCADE, null=True)
     ctenar = models.ForeignKey(Ctenar, on_delete=models.CASCADE)
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
 
@@ -51,3 +69,6 @@ class Kniha(models.Model):
 
     def __str__(self):
         return self.titul
+
+
+
