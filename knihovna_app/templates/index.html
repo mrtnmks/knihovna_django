@@ -10,8 +10,8 @@
     {% for kniha in knihas %}
     <div class="col-sm-4">
         <div class="card">
-            {% if kniha.priloha %}
-            <img class="card-img-top" src="{{ kniha.priloha }}" alt="{{ kniha.titul }}">
+            {% if kniha.obal %}
+            <img class="card-img-top" src="{{ kniha.obal.url }}" alt="{{ kniha.titul }}">
             {% endif %}
             <div class="card-body">
                 <h4 class="card-title">{{ kniha.titul }}</h4>

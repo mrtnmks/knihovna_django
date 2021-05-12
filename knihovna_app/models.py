@@ -59,6 +59,7 @@ class Kniha(models.Model):
                                help_text="Od 1 do 10", verbose_name="Hodnoceni")
     vydani = models.PositiveIntegerField(verbose_name="Vydání", default=letosni_rok(), validators=[MinValueValidator(1800), maximalni_rok])
     obsah = models.TextField(verbose_name="Obsah knihy", default='')
+    obal = models.ImageField(upload_to='kniha/obal/%Y/%m/%d/', blank=True, null=True, verbose_name="Obal")
     priloha = models.ForeignKey(Priloha, on_delete=models.CASCADE, null=True)
     ctenar = models.ForeignKey(Ctenar, on_delete=models.CASCADE)
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
