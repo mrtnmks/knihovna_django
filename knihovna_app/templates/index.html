@@ -1,31 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row mt-3 mb-3 bg-warning p-3">
-    <div class="col-sm-12">
-        <h2 class="text-center">Nejnovější knihy</h2>
+<div class="row mb-3">
+    <div class="col-sm-12 bg-warning">
+        <h2 class="display-4 text-center">Úvodní stránka</h2>
     </div>
 </div>
 <div class="row">
-    {% for kniha in knihas %}
-    <div class="col-sm-4">
-        <div class="card">
-            {% if kniha.obal %}
-            <img class="card-img-top" src="{{ kniha.obal.url }}" alt="{{ kniha.titul }}">
-            {% endif %}
-            <div class="card-body">
-                <h4 class="card-title">{{ kniha.titul }}</h4>
-                <p class="card-text"><strong>Žánry:</strong> {{ kniha.zanr }}</p>
-                <p><strong>Hodnocení:</strong> {{ kniha.hodnoceni }}</p>
-                <a href="#" class="btn btn-primary">Podrobnosti</a>
-            </div>
-        </div>
+    <div class="col-md-6">
+        <h2 class="text-center bg-success text-light p-2">Filmové novinky</h2>
+        {% include "blocks/new_films.html" %}
     </div>
-    {% endfor %}
+    <div class="col-md-3">
+        <h2 class="text-center bg-danger text-light p-2">Top deset filmů</h2>
+        {% include "blocks/top_ten.html" %}
+    </div>
+    <div class="col-md-3">
+        <h2 class="text-center bg-info text-light p-2">Filmové žánry</h2>
+        {% include "blocks/genre_list.html" %}
+    </div>
 </div>
 <div class="row">
-    <div class="col-sm-12">
-        <strong>Celkový počet knih:</strong> {{ num_knihas }}
-    </div>
 </div>
 {% endblock %}

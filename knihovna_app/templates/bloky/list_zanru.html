@@ -1,0 +1,5 @@
+<ul class="list-group">
+    {% for kniha in knihas %}
+    <li class="list-group-item list-group-item-info"><a class="text-dark" href="{% url 'kniha_zanr' kniha.titul %}">{{ kniha.titul }}</a></li>
+    {% endfor %}
+</ul>
