@@ -1,4 +1,4 @@
-from knihovna_app.models import Kniha
+from knihovna_app.models import Zanr
 
 def zanry(request):
-    return {'zanry': Kniha.objects.all()}
+    return {'zanry': Zanr.objects.all()}

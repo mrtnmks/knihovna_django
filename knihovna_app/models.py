@@ -50,11 +50,20 @@ class Priloha(models.Model):
 
      type = models.CharField(max_length=5, choices= TYPE_OF_ATTACHMENT, default='Obal', help_text='Vyber povolenou přílohu', verbose_name="Typ přílohy")
 
+class Zanr(models.Model):
+    nazev = models.CharField(max_length=10, null=False, verbose_name="Zadej název žánru")
+
+    class Meta:
+        ordering = ["nazev"]
+
+    def __str__(self):
+        return self.nazev
+
 class Kniha(models.Model):
     id = models.AutoField(primary_key=True)
     isbn = models.CharField(max_length=30, verbose_name="ISBN knihy")
     titul = models.CharField(max_length=100 , null=False, blank=False, verbose_name="Název díla")
-    zanr = models.CharField(max_length=30, verbose_name="Žánr", blank=False, null=False)
+    zanry = models.ManyToManyField(Zanr, help_text='Vyber žánry knihy')
     hodnoceni = models.FloatField(default=5, validators=[MinValueValidator(1), MaxValueValidator(10)], null=True,
                                help_text="Od 1 do 10", verbose_name="Hodnoceni")
     vydani = models.PositiveIntegerField(verbose_name="Vydání", default=letosni_rok(), validators=[MinValueValidator(1800), maximalni_rok])
@@ -70,6 +79,7 @@ class Kniha(models.Model):
 
     def __str__(self):
         return self.titul
+
 
 
 
