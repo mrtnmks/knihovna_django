@@ -7,7 +7,7 @@ def letosni_rok():
     return datetime.date.today().year
 
 def attachment_path(instance, filename):
-    return "kniha/" + str(instance.file) + "/attachments/" + filename
+    return "kniha/" + str(instance.soubor) + "/attachments/" + filename
 
 def maximalni_rok(hodnota):
     return MaxValueValidator(letosni_rok())(hodnota)
@@ -32,8 +32,6 @@ class Zanr(models.Model):
 
     class Meta:
         ordering = ["nazev"]
-        verbose_name = "Žánr"
-        verbose_name_plural = "Žánry"
 
 
     def __str__(self):

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
-from knihovna_app.models import Kniha, Priloha, Autor
+from knihovna_app.models import Kniha, Priloha, Autor, Zanr
 
 
 def index(request):
@@ -54,10 +54,10 @@ class KnihaDetailView(DetailView):
 
 
 class ZanrListView(ListView):
-    model = Kniha
+    model = Zanr
     template_name = 'bloky/list_zanru.html'
     context_object_name = 'zanrs'
-    queryset = Kniha.objects.order_by('titul').all()
+    queryset = Zanr.objects.order_by('nazev').all()
 
 
 class TopTenListView(ListView):
