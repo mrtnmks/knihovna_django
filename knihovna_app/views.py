@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
-from knihovna_app.models import Kniha, Priloha, Ctenar, Autor
+from knihovna_app.models import Kniha, Priloha, Autor
 
 
 def index(request):
@@ -41,7 +41,7 @@ class KnihaListView(ListView):
             context['view_title'] = f"Žánr: {self.kwargs['nazev_zanru']}"
             context['view_head'] = f"Žánr knihy: {self.kwargs['nazev_zanru']}"
         else:
-            context['view_title'] = 'Filmy'
+            context['view_title'] = 'Knihy'
             context['view_head'] = 'Přehled knih'
         return context
 

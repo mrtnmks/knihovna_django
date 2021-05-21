@@ -14,7 +14,7 @@
             <a class="nav-link active" href="{% url 'index' %}">Úvodní stránka</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'films' %}">Filmy</a>
+            <a class="nav-link" href="{% url 'knihy' %}">Knihy</a>
           </li>
             <!-- Dropdown -->
             <li class="nav-item dropdown">
@@ -22,8 +22,8 @@
                 Žánry
               </a>
               <div class="dropdown-menu">
-                 {% for genre in genres %}
-                    <a class="dropdown-item" href="{% url 'film_genre' genre.name %}">{{ genre.name }}</a>
+                 {% for zanr in zanrs %}
+                    <a class="dropdown-item" href="{% url 'kniha_zanr' zanr.nazev %}">{{ zanr.nazev }}</a>
                  {% endfor %}
               </div>
             </li>

@@ -13,7 +13,7 @@
 <div class="row mt-5 mb-3">
     <div class="col-lg-6 mb-3">
         <h2 class="display-4 mb-3">{{ kniha_detail.titul }}</h2>
-        <div class="bg-secondary text-light p-2 mb-3">Autor: {{ kniha_detail.autor }}, Rok vzniku: {{ kniha_detail.vydani.year }},
+        <div class="bg-secondary text-light p-2 mb-3">Autor: {{ kniha_detail.autor }}, Datum vydání: {{ kniha_detail.vydani.year }},
             {% with ''|center:kniha_detail.hodnoceni as range %}
             {% for _ in range %}★{% endfor %}
             {% endwith %}
@@ -23,7 +23,7 @@
             <div class="col-md-9">{{ kniha_detail.obsah }}</div>
             <div class="col-md-3">
                 <a href="{{ kniha_detail.obal.url }}" data-toggle="lightbox" data-gallery="gallery">
-                    <img src="{{ kniha_detail.obal.url }}" class="img-fluid" alt="Plakát k filmu">
+                    <img src="{{ kniha_detail.obal.url }}" class="img-fluid" alt="Obal knihy">
                 </a>
             </div>
         </div>

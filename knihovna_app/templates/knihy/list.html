@@ -9,16 +9,16 @@
     </div>
 </div>
 <div class="row">
-    {% for kniha in films_list %}
+    {% for kniha in knihas_list %}
     <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
         <div class="card">
-            {% if film.obal %}
+            {% if kniha.obal %}
             <img class="card-img-top" src="{{ kniha.obal.url }}" alt="{{ kniha.titul }}">
             {% endif %}
             <div class="card-body">
-                <h4 class="card-title"><a href="{% url 'kniha_detail' film.pk %}">{{ film.title }}</a></h4>
-                <p class="card-text">{% for zanr in kniha.zanrs.all %}<a href="{% url 'kniha_zanr' genre.name %}" class="btn btn-light">{{ kniha.zanr }}</a> {% endfor %}</p>
-                <a href="{% url 'kniha_detail' film.pk %}" class="btn btn-primary">Podrobnosti</a>
+                <h4 class="card-title"><a href="{% url 'kniha_detail' kniha.pk %}">{{ kniha.title }}</a></h4>
+                <p class="card-text">{% for zanr in kniha.zanr.all %}<a href="{% url 'kniha_zanr' zanr.nazev %}" class="btn btn-light">{{ zanr.nazev }}</a> {% endfor %}</p>
+                <a href="{% url 'kniha_detail' kniha.pk %}" class="btn btn-primary">Podrobnosti</a>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
 {% endif %}
 <div class="row mt-3">
     <div class="col-sm-12">
-        <h4>Celkový počet filmů: {{ num_films }}</h4>
+        <h4>Celkový počet filmů: {{ num_knihas }}</h4>
     </div>
 </div>
 {% endblock %}
