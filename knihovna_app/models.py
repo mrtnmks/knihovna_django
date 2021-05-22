@@ -43,7 +43,7 @@ class Zanr(models.Model):
 class Kniha(models.Model):
     isbn = models.CharField(max_length=30, verbose_name="ISBN knihy")
     titul = models.CharField(max_length=100 , null=False, blank=False, verbose_name="Název díla")
-    zanr = models.ManyToManyField(Zanr, help_text='Vyber žánry knihy')
+    zanry = models.ManyToManyField(Zanr, help_text='Vyber žánry knihy')
     strany = models.IntegerField(blank=True, null=True, help_text="Zadejte počet stránek díla", verbose_name="Počet stránek")
     hodnoceni = models.FloatField(default=5, validators=[MinValueValidator(1), MaxValueValidator(10)], null=True, help_text="Od 1 do 10", verbose_name="Hodnocení")
     vydani = models.DateField(blank=True, null=True,
@@ -79,7 +79,7 @@ class Priloha(models.Model):
         ('Jiné', 'Jiné'),
     )
 
-    typ = models.CharField(max_length=5, choices=TYP_PRILOHY, default='Image', help_text='Vyber povolenou přílohu',
+    typ = models.CharField(max_length=5, choices=TYP_PRILOHY, default='image', help_text='Vyber povolenou přílohu',
                             verbose_name="Typ přílohy")
     kniha = models.ForeignKey(Kniha, on_delete=models.CASCADE, default='')
 

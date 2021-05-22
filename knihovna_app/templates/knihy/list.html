@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="row">
-    {% for kniha in knihas_list %}
+    {% for kniha in list_knih %}
     <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
         <div class="card">
             {% if kniha.obal %}
@@ -17,7 +17,7 @@
             {% endif %}
             <div class="card-body">
                 <h4 class="card-title"><a href="{% url 'kniha_detail' kniha.pk %}">{{ kniha.title }}</a></h4>
-                <p class="card-text">{% for zanr in kniha.zanr.all %}<a href="{% url 'kniha_zanr' zanr.nazev %}" class="btn btn-light">{{ zanr.nazev }}</a> {% endfor %}</p>
+                <p class="card-text">{% for zanr in kniha.zanry.all %}<a href="{% url 'kniha_zanr' zanr.nazev %}" class="btn btn-light">{{ zanr.nazev }}</a> {% endfor %}</p>
                 <a href="{% url 'kniha_detail' kniha.pk %}" class="btn btn-primary">Podrobnosti</a>
             </div>
         </div>
@@ -33,7 +33,7 @@
 {% endif %}
 <div class="row mt-3">
     <div class="col-sm-12">
-        <h4>Celkový počet filmů: {{ num_knihas }}</h4>
+        <h4>Celkový počet knih: {{ num_knihas }}</h4>
     </div>
 </div>
 {% endblock %}

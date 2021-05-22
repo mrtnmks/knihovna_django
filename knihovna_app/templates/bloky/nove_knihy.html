@@ -11,7 +11,7 @@
             <h4><a href="{% url 'kniha_detail' kniha.id %}">{{ kniha.titul }}</a></h4>
             <p>{{ kniha.obsah|truncatewords:30 }}</p>
             <p class="border-top pt-2">Autor: <b>{{ kniha.autor }} </b>, datum vydání: <b>{{ kniha.vydani }}</b></p>
-            <p>Žánr: {% for zanr in kniha.zanr.all %} <a href="{% url 'kniha_zanr' kniha.zanr %}" class="btn btn-light">{{ kniha.zanr }}</a> {% endfor %}</p>
+            <p>Žánr: {% for zanr in kniha.zanry.all %} <a href="{% url 'kniha_zanr' zanr.nazev %}" class="btn btn-light">{{ zanr.nazev }}</a> {% endfor %}</p>
         </div>
         <div class="col-md-2">
             <span class="display-4">{{ kniha.hodnoceni }}</span>

@@ -9,7 +9,7 @@ def index(request):
 
     # Generate counts of some of the main objects
     num_knihas = Kniha.objects.all().count()
-    knihas = Kniha.objects.order_by('vydani')[:3]
+    knihas = Kniha.objects.order_by('vydani')[:10]
 
     context = {
         'num_knihas': num_knihas,
@@ -22,7 +22,7 @@ def index(request):
 class KnihaListView(ListView):
     model = Kniha
 
-    context_object_name = 'films_list'   # your own name for the list as a template variable
+    context_object_name = 'list_knih'   # your own name for the list as a template variable
     template_name = 'knihy/list.html'  # Specify your own template name/location
     paginate_by = 3
 

@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Seznam filmů{% endblock %}
+{% block title %}Seznam knih{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
-        <h2>Seznam filmů: {{ view.kwargs.nazev_zanru }}</h2>
+        <h2>Seznam knih: {{ view.kwargs.nazev_zanru }}</h2>
     </div>
 </div>
 <div class="row">
@@ -16,7 +16,7 @@
             {% endif %}
             <div class="card-body">
                 <h4 class="card-title"><a href="{% url 'kniha_detail' film.pk %}">{{ kniha.titul }}</a></h4>
-                <p class="card-text">{% for zanr in kniha.zanr.all %}<a href="{% url 'kniha_zanr' zanr.nazev %}" class="btn btn-info">{{ zanr.nazev }}</a> {% endfor %}</p>
+                <p class="card-text">{% for zanr in kniha.zanry.all %}<a href="{% url 'kniha_zanr' zanr.nazev %}" class="btn btn-info">{{ zanr.nazev }}</a> {% endfor %}</p>
                 <a href="{% url 'kniha_detail' kniha.pk %}" class="btn btn-primary">Podrobnosti</a>
             </div>
         </div>
@@ -25,7 +25,7 @@
 </div>
 <div class="row">
     <div class="col-sm-12">
-        <strong>Celkový počet filmů:</strong> {{ num_knihas }}
+        <strong>Celkový počet knih:</strong> {{ num_knihas }}
     </div>
 </div>
 {% endblock %}
