@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Detail knihy{% endblock %}
+{% block css %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-sm-12 bg-warning">
+        <h2 class="display-4 text-center">Podrobné informace</h2>
+    </div>
+</div>
+<div class="row mt-5 mb-3">
+    <div class="col-lg-6 mb-3">
+        <h2 class="display-4 mb-3">{{ book_detail.title }}</h2>
+        <div class="bg-secondary text-light p-2 mb-3">Rok vzniku: {{ book_detail.release_date.year }}, počet stran: {{ book_detail.pages }},
+            {% with ''|center:book_detail.rate as range %}
+            {% for _ in range %}★{% endfor %}
+            {% endwith %}
+            <b>{{ book_detail.rate }}</b>
+        </div>
+        <div class="row">
+            <div class="col-md-9">{{ book_detail.plot }}</div>
+            <div class="col-md-3">
+                {% if book_detail.poster %}
+                <a href="{{ book_detail.poster.url }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src="{{ book_detail.poster.url }}" class="img-fluid" alt="Plakát ke knize">
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 bg-light p-3">
+        <h3 class="border-bottom pb-3 text-secondary text-center text-uppercase">Fotogalerie</h3>
+        <div class="row">
+        {% for image in book_detail.attachment_set.all %}
+            <div class="col-lg-6 col-xl-4">
+                <a href="{{ image.file.url }}" data-toggle="lightbox" data-gallery="gallery">
+                    <img src="{{ image.file.url }}" class="img-fluid img-thumbnail" alt="{{ image.title }}">
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% if user.is_authenticated %}
+<div class="row mb-3">
+    <div class="col-sm-12 text-center">
+        <a href="{% url 'book-update' book_detail.pk %}" class="btn btn-primary">Upravit</a>
+        <a href="{% url 'book-delete' book_detail.pk %}" class="btn btn-danger">Smazat</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+<script>
+    $(document).on("click", '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+</script>
+{% endblock %}

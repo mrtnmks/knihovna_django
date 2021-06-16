@@ -1,4 +1,4 @@
-from knihovna_app.models import Zanr
+from knihovna_app.models import Genre
 
-def zanry(request):
-    return {'zanry': Zanr.objects.all()}
+def genres(request):
+    return {'genres': Genre.objects.all()}

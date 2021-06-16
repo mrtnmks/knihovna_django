@@ -3,8 +3,12 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('knihy/', views.KnihaListView.as_view(), name='knihy'),
+    path('books/', views.BookListView.as_view(), name='books'),
     #re_path(r'^films/genres/(?P<genre_name>[\w-]+)/:?(?P<order>[\w-]*)$', views.FilmListView.as_view(), name='film_genre'),
-    path('knihy/zanry/<str:nazev_zanru>/', views.KnihaListView.as_view(), name='kniha_zanr'),
-    path('knihy/<int:pk>/', views.KnihaDetailView.as_view(), name='kniha_detail'),
+    path('books/genres/<str:genre_name>/', views.BookListView.as_view(), name='book-genre'),
+    path('books/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
+    path('books/create/', views.BookCreate.as_view(), name='book-create'),
+    path('books/<int:pk>/update/', views.BookUpdate.as_view(), name='book-update'),
+    path('books/<int:pk>/delete/', views.BookDelete.as_view(), name='book-delete'),
+    #path('films/<int:pk>/edit/', views.edit_film, name='film-edit'),
 ]

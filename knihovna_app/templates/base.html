@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <title>{% block title %}Online Databáze Knih{% endblock %}</title>
+    <title>{% block title %}Knihovna{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
@@ -10,21 +10,23 @@
     {% load static %}
     {% block css %}
     {% endblock %}
-    <link rel="stylesheet" href="% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <header class="jumbotron-fluid p-5 text-center bg-dark">
-        <h1 class="text-white text-uppercase display-3">Online Databáze Knih</h1>
+    <header>
+    {% block header %}
+        {% include "page/header.html" %}
+    {% endblock %}
     </header>
     {% block navbar %}
-        {% include "stranka/navbar.html" %}
+        {% include "page/navbar.html" %}
     {% endblock %}
     <main class="container-fluid">
     {% block content %}{% endblock %}
     </main>
     <footer class="container-fluid">
     {% block footer %}
-        {% include "stranka/footer.html" %}
+        {% include "page/footer.html" %}
     {% endblock %}
     </footer>
 <!-- jQuery library -->
