@@ -29,7 +29,8 @@ class Genre(models.Model):
         return obj.book_set.count()
 
 class Book(models.Model):
-    isbn = models.CharField(max_length=30, verbose_name="ISBN of the book")
+    isbn = models.CharField(max_length=30, verbose_name="ISBN")
+    author = models.CharField(max_length=40, verbose_name="Author", default="")
     title = models.CharField(max_length=200, verbose_name="Title")
     plot = models.TextField(blank=True, null=True, verbose_name="Plot")
     release_date = models.DateField(blank=True, null=True,
@@ -54,7 +55,7 @@ class Book(models.Model):
         return f"{self.title}, year: {str(self.release_date.year)}, rate: {str(self.rate)}"
 
     def get_absolute_url(self):
-        return reverse('film-detail', args=[str(self.id)])
+        return reverse('book-detail', args=[str(self.id)])
 
     def release_year(self):
         return self.release_date.year

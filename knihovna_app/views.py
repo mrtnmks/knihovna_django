@@ -47,7 +47,7 @@ class BookListView(ListView):
             context['view_title'] = f"Žánr: {self.kwargs['genre_name']}"
             context['view_head'] = f"Žánr knihy: {self.kwargs['genre_name']}"
         else:
-            context['view_title'] = 'Filmy'
+            context['view_title'] = 'Knihy'
             context['view_head'] = 'Přehled knih'
         return context
 
@@ -83,17 +83,19 @@ class NewBooksistView(ListView):
 
 class BookCreate(CreateView):
     model = Book
+    template_name = 'knihovna/book_form.html'
     fields = ['title', 'plot', 'release_date', 'pages', 'poster', 'rate', 'genres']
     initial = {'rate': '5'}
 
 
 class BookUpdate(UpdateView):
     model = Book
-    template_name = 'knihovna/film_bootstrap_form.html'
+    template_name = 'knihovna/book_bootstrap_form.html'
     form_class = BookModelForm
     #fields = '__all__' # Not recommended (potential security issue if more fields added)
 
 
 class BookDelete(DeleteView):
     model = Book
+    template_name = 'knihovna/book_confirm_delete.html'
     success_url = reverse_lazy('books')
