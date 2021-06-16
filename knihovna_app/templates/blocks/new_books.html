@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <h4><a href="{% url 'book-detail' book.id %}">{{ book.title }}</a></h4>
             <p>{{ book.plot|truncatewords:30 }}</p>
-            <p class="border-top pt-2">Počet stran: <b>{{ book.pages }}</b>, datum uvedení: <b>{{ book.release_date }}</b></p>
+            <p class="border-top pt-2">Autor: <b>{{ book.author }}</b>, počet stran: {{ book.pages }}, datum uvedení: <b>{{ book.release_date }}</b></p>
             <p>Žánry: {% for genre in book.genres.all %}<a href="{% url 'book-genre' genre.name %}" class="btn btn-light">{{ genre.name }}</a> {% endfor %}</p>
         </div>
         <div class="col-md-2">

@@ -13,7 +13,7 @@
 <div class="row mt-5 mb-3">
     <div class="col-lg-6 mb-3">
         <h2 class="display-4 mb-3">{{ book_detail.title }}</h2>
-        <div class="bg-secondary text-light p-2 mb-3">Rok vzniku: {{ book_detail.release_date.year }}, počet stran: {{ book_detail.pages }},
+        <div class="bg-secondary text-light p-2 mb-3">Autor: {{book_detail.author }}, rok vzniku: {{ book_detail.release_date.year }}, počet stran: {{ book_detail.pages }},
             {% with ''|center:book_detail.rate as range %}
             {% for _ in range %}★{% endfor %}
             {% endwith %}
