@@ -11,4 +11,5 @@ urlpatterns = [
     path('books/<int:pk>/update/', views.BookUpdate.as_view(), name='book-update'),
     path('books/<int:pk>/delete/', views.BookDelete.as_view(), name='book-delete'),
     #path('films/<int:pk>/edit/', views.edit_film, name='film-edit'),
+    path('clear_cache/', views.clear_cache),
 ]

@@ -18,7 +18,9 @@
             <div class="card-body">
                 <h4 class="card-title"><a href="{% url 'book-detail' book.pk %}">{{ book.title }}</a></h4>
                 <p class="card-text">{% for genre in book.genres.all %}<a href="{% url 'book-genre' genre.name %}" class="btn btn-light">{{ genre.name }}</a> {% endfor %}</p>
-                <a href="{% url 'book-detail' book.pk %}" class="btn btn-primary">Podrobnosti</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'book-detail' book.pk %}" class="btn btn-warning">Podrobnosti</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -39,7 +41,7 @@
 {% if user.is_authenticated %}
 <div class="row mb-3">
     <div class="col-sm-12 text-center">
-        <a href="{% url 'book-create' %}" class="btn btn-success">Nová kniha</a>
+        <a href="{% url 'book-create' %}" class="btn btn-dark">Nová kniha</a>
     </div>
 </div>
 {% endif %}

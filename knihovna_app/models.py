@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
@@ -34,7 +35,7 @@ class Book(models.Model):
     title = models.CharField(max_length=200, verbose_name="Title")
     plot = models.TextField(blank=True, null=True, verbose_name="Plot")
     release_date = models.DateField(blank=True, null=True,
-                                    help_text="Please use the following format: <em>YYYY-MM-DD</em>.",
+                                    help_text="Enter a valid date",
                                     verbose_name="Release date")
     pages = models.IntegerField(blank=True, null=True,
                                   help_text="Please enter amounth of pages",
@@ -46,6 +47,7 @@ class Book(models.Model):
                              help_text="Please enter an float value (range 1.0 - 10.0)",
                              verbose_name="Rate")
     genres = models.ManyToManyField(Genre, help_text='Select a genre for this Book')
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, default="")
 
     class Meta:
         ordering = ["-release_date", "title"]
@@ -100,6 +102,21 @@ class Attachment(models.Model):
             value = round(x/1024**3, 2)
             ext = ' GB'
         return str(value)+ext
+
+class Review(models.Model):
+    text = models.TextField(verbose_name="Text")
+    edit_date = models.DateTimeField(auto_now=True)
+    rate = models.IntegerField(default=5,
+                             validators=[MinValueValidator(1), MaxValueValidator(10)],
+                             null=True,
+                             help_text="Please enter an integer value (range 1 - 10)",
+                             verbose_name="Rate")
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    # Metadata
+    class Meta:
+        order_with_respect_to = 'book'
 
 
 

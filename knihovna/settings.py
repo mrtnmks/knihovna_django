@@ -25,13 +25,14 @@ SECRET_KEY = 'django-insecure-jx&-^%aso7j^$%%&l=kr!ns(95q3c@25)r=496pfhly+t(rgj6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'knihovna_app',
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,12 +1,17 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import Permission
+from django.core.cache import cache
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
+from django.views.decorators.cache import never_cache
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator
 
 from knihovna_app.forms import BookModelForm
-from knihovna_app.forms import Book, Genre, Attachment
+from knihovna_app.models import Book, Genre, Attachment
 
 
 def index(request):
@@ -81,21 +86,50 @@ class NewBooksistView(ListView):
     paginate_by = 2
 
 
-class BookCreate(CreateView):
+class BookCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Book
     template_name = 'knihovna/book_form.html'
-    fields = ['title', 'plot', 'release_date', 'pages', 'poster', 'rate', 'genres']
+    fields = ['isbn', 'title', 'plot', 'release_date', 'pages', 'poster', 'rate', 'genres', 'author']
     initial = {'rate': '5'}
+    login_url = '/accounts/login/'
+    permission_required = 'books.add_book'
 
 
-class BookUpdate(UpdateView):
+class BookUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Book
     template_name = 'knihovna/book_bootstrap_form.html'
     form_class = BookModelForm
+    login_url = '/accounts/login/'
+    permission_required = 'books.update_book'
     #fields = '__all__' # Not recommended (potential security issue if more fields added)
 
 
-class BookDelete(DeleteView):
+class BookDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Book
     template_name = 'knihovna/book_confirm_delete.html'
     success_url = reverse_lazy('books')
+    login_url = '/accounts/login/'
+    permission_required = 'books.delete_book'
+
+def error_404(request, exception=None):
+    return render(request, 'errors/404.html')
+
+
+def error_500(request):
+    return render(request, 'errors/500.html')
+
+
+def error_403(request, exception=None):
+    return render(request, 'errors/403.html')
+
+
+def error_400(request, exception=None):
+    return render(request, 'errors/400.html')
+
+
+@never_cache
+def clear_cache(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    cache.clear()
+    return HttpResponse('Cache has been cleared')
