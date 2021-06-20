@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Editace knihy{% endblock %}
-
+{% load widget_tweaks %}
+{% block title %}Driver deletion{% endblock %}
 {% block content %}
-<div class="row mb-3">
-    <div class="col-sm-12 bg-warning">
-        <h2 class="display-4 text-center">Smazání knihy</h2>
+<div class="row mt-4 mb-3 bg-warning text-dark p-3">
+    <div class="col-sm-12">
+        <h2 class="text-center">Smazání knihy</h2>
     </div>
 </div>
-<div class="row mt-5 mb-3">
-    <p>Určitě chcete smazat tuto knihu: {{ book }}?</p>
-    <form action="" method="POST">
-      {% csrf_token %}
-      <input type="submit" value="Yes, delete.">
+<div class="row mt-5 pl-3 mb-3">
+    <p>Jste si jist, že chcete odstranit tuto knihu <strong>{{ book }}</strong> ?</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <button class="btn btn-primary ml-3">Ano, chci</button>
     </form>
 </div>
 {% endblock %}

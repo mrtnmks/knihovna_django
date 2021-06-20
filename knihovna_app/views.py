@@ -89,10 +89,10 @@ class NewBooksistView(ListView):
 class BookCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Book
     template_name = 'knihovna/book_form.html'
-    fields = ['isbn', 'title', 'plot', 'release_date', 'pages', 'poster', 'rate', 'genres', 'author']
+    fields = ['isbn', 'title', 'plot', 'release_date', 'pages', 'poster', 'rate', 'genres', 'author', 'autor']
     initial = {'rate': '5'}
     login_url = '/accounts/login/'
-    permission_required = 'books.add_book'
+    permission_required = 'knihovna_app.add_book'
 
 
 class BookUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -100,7 +100,7 @@ class BookUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'knihovna/book_bootstrap_form.html'
     form_class = BookModelForm
     login_url = '/accounts/login/'
-    permission_required = 'books.update_book'
+    permission_required = 'knihovna_app.change_book'
     #fields = '__all__' # Not recommended (potential security issue if more fields added)
 
 
@@ -109,7 +109,7 @@ class BookDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'knihovna/book_confirm_delete.html'
     success_url = reverse_lazy('books')
     login_url = '/accounts/login/'
-    permission_required = 'books.delete_book'
+    permission_required = 'knihovna_app.delete_book'
 
 def error_404(request, exception=None):
     return render(request, 'errors/404.html')
